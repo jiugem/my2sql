@@ -1,3 +1,29 @@
+# 个人自用
+修改了go-mysql-org版本，不再要求 default_authentication_plugin=mysql_native_password 减少错误提示
+
+编译安装命令
+```
+go env -w GOPROXY=https://goproxy.cn,direct
+go mod tidy
+go mod vendor
+go build .
+```
+
+对开源库github.com/go-mysql-org/go-mysql vendor/github.com/go-mysql-org/go-mysql/replication/parser.go 增加全局函数
+
+```
+// added by momo
+func (p *BinlogParser) ParseHeader(data []byte) (*EventHeader, error) {
+	return p.parseHeader(data)
+}
+
+// added by momo
+func (p *BinlogParser) ParseEvent(h *EventHeader, data []byte, rawData []byte) (Event, error) {
+	return p.parseEvent(h, data, rawData)
+}
+```
+参考 https://github.com/fulldb/my2sql
+
 # my2sql
 go版MySQL binlog解析工具，通过解析MySQL binlog ，可以生成原始SQL、回滚SQL、去除主键的INSERT SQL等，也可以生成DML统计信息。类似工具有binlog2sql、MyFlash、my2fback等，本工具基于my2fback、binlog_rollback工具二次开发而来。
 
@@ -16,7 +42,7 @@ go版MySQL binlog解析工具，通过解析MySQL binlog ，可以生成原始SQ
 # 产品性能对比
 binlog2sql当前是业界使用最广泛的MySQL回滚工具，下面对my2sql和binlog2sql做个性能对比。
 
-|                          |my2sql     |binlog2sql|
+|       对比场景        |my2sql     |binlog2sql|
 |---                       |---         |---   |
 |1.1G binlog生成回滚SQL      |  1分40秒   |    65分钟  |
 |1.1G binlog生成原始SQL      |  1分30秒   |     50分钟|
@@ -118,17 +144,6 @@ default false, this is, use changed columns to build set part, use primary/uniqu
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 # 使用案例
 ### 解析出标准SQL
 #### 根据时间点解析出标准SQL
@@ -190,12 +205,11 @@ default false, this is, use changed columns to build set part, use primary/uniqu
 ```
 
 # 下载二进制版本
- + 有编译好的linux版本(CentOS release 7.x)  [点击下载Linux版](https://github.com/liuhr/my2sql/blob/master/releases/centOS_release_7.x/my2sql)
+ + 有编译好的Linux版本 [点击下载x86_64版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_7.x_x86_64/my2sql)  [点击下载ARM版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_8.x_aarch64/my2sql)
 
 # 编译安装
 ```
-cd $GOPATH/src
-git clone https://github.com/liuhr/my2sql.git
+git clone https://github.com/jiugem/my2sql.git
 cd my2sql/
 go build .
 ```
@@ -209,7 +223,6 @@ go build .
   但注意此开始与结束时间针对的是binlog event header中保存的unix timestamp。结果中的额外的datetime时间信息都是binlog event header中的unix
 timestamp
 * 此工具是伪装成从库拉取binlog，需要连接数据库的用户有SELECT, REPLICATION SLAVE, REPLICATION CLIENT权限
-* MySQL8.0版本需要在配置文件中加入default_authentication_plugin  =mysql_native_password，用户密码认证必须是mysql_native_password才能解析
 
 # 感谢
  感谢[https://github.com/siddontang](https://github.com/siddontang)的binlog解析库， 感谢dropbox的sqlbuilder库，感谢my2fback、binlog_rollback
@@ -217,3 +230,4 @@ timestamp
 # TODO
 - [x] GTID事务为单位进行解析
 - [x] 闪回、回滚添加begin/commit事务标示
+
