@@ -205,7 +205,7 @@ default false, this is, use changed columns to build set part, use primary/uniqu
 ```
 
 # 下载二进制版本
- + 有编译好的Linux版本 [x86_64版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_7.x_x86_64/my2sql)   [ARM版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_8.x_aarch64/my2sql)
+ + 有编译好的Linux版本，点击下载[x86_64版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_7.x_x86_64/my2sql) 或 [ARM版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_8.x_aarch64/my2sql)
 
 # 编译安装
 ```
