@@ -205,7 +205,7 @@ default false, this is, use changed columns to build set part, use primary/uniqu
 ```
 
 # 下载二进制版本
- + 有编译好的Linux版本 [点击下载x86_64版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_7.x_x86_64/my2sql)  [点击下载ARM版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_8.x_aarch64/my2sql)
+ + 有编译好的Linux版本 [x86_64版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_7.x_x86_64/my2sql)   [ARM版本](https://github.com/jiugem/my2sql/blob/master/releases/CentOS_8.x_aarch64/my2sql)
 
 # 编译安装
 ```
@@ -222,7 +222,7 @@ go build .
 * 支持指定-tl时区来解释binlog中time/datetime字段的内容。开始时间-start-datetime与结束时间-stop-datetime也会使用此指定的时区，
   但注意此开始与结束时间针对的是binlog event header中保存的unix timestamp。结果中的额外的datetime时间信息都是binlog event header中的unix
 timestamp
-* 此工具是伪装成从库拉取binlog，需要连接数据库的用户有SELECT, REPLICATION SLAVE, REPLICATION CLIENT权限
+* 此工具伪装成从库拉取binlog，需要连接数据库的用户有SELECT, REPLICATION SLAVE, REPLICATION CLIENT权限
 
 # 感谢
  感谢[https://github.com/siddontang](https://github.com/siddontang)的binlog解析库， 感谢dropbox的sqlbuilder库，感谢my2fback、binlog_rollback
